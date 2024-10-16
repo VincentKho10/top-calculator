@@ -4,6 +4,7 @@ const operatorsection = document.createElement('div')
 
 const operand1 = 0;
 const operand2 = 0;
+const result = 0;
 
 const numbernodes = []
 const operatornodes = ["*/+-"]
@@ -16,6 +17,9 @@ for (let i=0; i<10; i++){
 }
 
 for(let char of operatornodes[0]){
+    const btnoperator = document.createElement('button')
+    btnoperator.textContent = char
+    btnoperator.addEventListener('click', ()=>{})
     operatornodes.push(char)
 }
 operatornodes.splice(0,1)
