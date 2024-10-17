@@ -46,7 +46,6 @@ for (let i = 0; i < 10; i++) {
   btnnumber.addEventListener("click", () => {
     if (isInit) {
       result += i;
-      console.log(result);
       console.log("operand: " + result);
     } else {
       operand += i;
@@ -60,22 +59,17 @@ for (let char of operatornodes[0]) {
   const btnoperator = document.createElement("button");
   btnoperator.textContent = char;
   btnoperator.addEventListener("click", () => {
-    // result = parseInt(result);
-    // if (isInit){
-    //     operator=char;
-    // }else{
-        if (char != "=") {
-            calculationProcess();
-            operator = char;
-            console.log(result + " " + operator);
-        } else {
-            calculationProcess();
-            console.log(result);
-            varReset();
-            return;
-        }
-        resetOperand();
-    // }
+    if (char != "=") {
+        calculationProcess();
+        operator = char;
+        console.log(result + " " + operator);
+    } else {
+        calculationProcess();
+        console.log(result);
+        varReset();
+        return;
+    }
+    resetOperand();
     isInit = false;
   });
   operatornodes.push(btnoperator);
