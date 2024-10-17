@@ -1,31 +1,85 @@
-const mainpage = document.querySelector('div#mainpage')
-const numbersection = document.createElement('div')
-const operatorsection = document.createElement('div')
+const mainpage = document.querySelector("div#mainpage");
+const numbersection = document.createElement("div");
+const operatorsection = document.createElement("div");
+const resultsection = document.createElement("div");
 
-const operand1 = 0;
-const operand2 = 0;
-const result = 0;
+let operand = "";
+let result = "";
+let isInit = true;
+let operator = "";
 
-const numbernodes = []
-const operatornodes = ["*/+-"]
+const numbernodes = [];
+const operatornodes = ["*/+-="];
 
-for (let i=0; i<10; i++){
-    const btnnumber = document.createElement('button')
-    btnnumber.textContent = i
-    btnnumber.addEventListener('click', ()=>console.log(i))
-    numbernodes.push(btnnumber)
+const resetOperand = () => (operand = "");
+const varReset = () => {
+  operand = "";
+  result = "";
+  isInit = true;
+  operator = "";
+};
+
+const calculationProcess = () => {
+  result = parseInt(result);
+  operand = parseInt(operand);
+  switch (operator) {
+    case "+":
+      result += operand;
+      break;
+    case "-":
+      result -= operand;
+      break;
+    case "*":
+      result *= operand;
+      break;
+    case "/":
+      result /= operand;
+      break;
+    default:
+      break;
+  }
+};
+
+for (let i = 0; i < 10; i++) {
+  const btnnumber = document.createElement("button");
+  btnnumber.textContent = i;
+  btnnumber.addEventListener("click", () => {
+    if (isInit) {
+      result += i;
+      console.log(result);
+      console.log("operand: " + result);
+    } else {
+      operand += i;
+      console.log("operand: " + operand);
+    }
+  });
+  numbernodes.push(btnnumber);
 }
 
-for(let char of operatornodes[0]){
-    const btnoperator = document.createElement('button')
-    btnoperator.textContent = char
-    btnoperator.addEventListener('click', ()=>{})
-    operatornodes.push(char)
+for (let char of operatornodes[0]) {
+  const btnoperator = document.createElement("button");
+  btnoperator.textContent = char;
+  btnoperator.addEventListener("click", () => {
+    // result = parseInt(result);
+    console.log(char != "=");
+    if (char != "="||!isInit) {
+      operator = char;
+      calculationProcess();
+      console.log(result + " " + operator);
+    } else {
+      calculationProcess();
+      console.log(result);
+      varReset();
+      return;
+    }
+    resetOperand();
+    isInit = false;
+  });
+  operatornodes.push(btnoperator);
 }
-operatornodes.splice(0,1)
+operatornodes.splice(0, 1);
 
-console.log(operatornodes)
+numbersection.append(...numbernodes);
+operatorsection.append(...operatornodes);
 
-numbersection.append(...numbernodes)
-
-mainpage.append(numbersection)
+mainpage.append(numbersection, operatorsection);
