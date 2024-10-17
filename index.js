@@ -61,18 +61,21 @@ for (let char of operatornodes[0]) {
   btnoperator.textContent = char;
   btnoperator.addEventListener("click", () => {
     // result = parseInt(result);
-    console.log(char != "=");
-    if (char != "="||!isInit) {
-      operator = char;
-      calculationProcess();
-      console.log(result + " " + operator);
-    } else {
-      calculationProcess();
-      console.log(result);
-      varReset();
-      return;
-    }
-    resetOperand();
+    // if (isInit){
+    //     operator=char;
+    // }else{
+        if (char != "=") {
+            calculationProcess();
+            operator = char;
+            console.log(result + " " + operator);
+        } else {
+            calculationProcess();
+            console.log(result);
+            varReset();
+            return;
+        }
+        resetOperand();
+    // }
     isInit = false;
   });
   operatornodes.push(btnoperator);
