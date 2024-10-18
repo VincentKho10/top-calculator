@@ -7,9 +7,19 @@ let operand = "";
 let result = "";
 let isInit = true;
 let operator = "";
+let isDotUsed = false;
 
-const numbernodes = [];
+const numbernodes = ["0123456789."];
 const operatornodes = ["*/+-="];
+
+const enableDotButton = (isOn) => {
+  const dot = document.querySelector("#btndot");
+  if (isOn) {
+    dot.removeAttribute("disabled");
+  } else {
+    dot.setAttribute("disabled", "");
+  }
+};
 
 const resetOperand = () => (operand = "");
 const varReset = () => {
@@ -17,11 +27,13 @@ const varReset = () => {
   result = "";
   isInit = true;
   operator = "";
+  isDotUsed = false;
 };
 
-const calculationProcess = () => {
-  result = parseInt(result);
-  operand = parseInt(operand);
+const calculationProcess = (char) => {
+  result = parseFloat(result);
+  operand = parseFloat(operand);
+  operator = char;
   switch (operator) {
     case "+":
       result += operand;
@@ -38,42 +50,55 @@ const calculationProcess = () => {
     default:
       break;
   }
+  if (char == "=") {
+    console.log("end result:" + parseFloat(result));
+  } else{
+    console.log("current state:" + parseFloat(result) + " " + operator);
+  }
+  isDotUsed = false;
 };
 
-for (let i = 0; i < 10; i++) {
+[...numbernodes[0]].forEach((char, idx) => {
   const btnnumber = document.createElement("button");
-  btnnumber.textContent = i;
+  btnnumber.textContent = char;
+  if (char == ".") {
+    btnnumber.setAttribute("disabled", "")
+    btnnumber.setAttribute('id', 'btndot')
+  };
   btnnumber.addEventListener("click", () => {
+    operand += char;
+    console.log("operand: " + operand);
+
+    if(operand.length>=1 && !isDotUsed){
+      enableDotButton(true)
+    }
+
+    if(char=="."){
+      enableDotButton(false)
+      isDotUsed=true
+    }
+
     if (isInit) {
-      result += i;
-      console.log("operand: " + result);
-    } else {
-      operand += i;
-      console.log("operand: " + operand);
+      result = operand;
     }
   });
   numbernodes.push(btnnumber);
-}
+});
+numbernodes.splice(0, 1);
 
-for (let char of operatornodes[0]) {
+[...operatornodes[0]].forEach((char, idx) => {
   const btnoperator = document.createElement("button");
   btnoperator.textContent = char;
   btnoperator.addEventListener("click", () => {
-    if (char != "=") {
-        calculationProcess();
-        operator = char;
-        console.log(result + " " + operator);
-    } else {
-        calculationProcess();
-        console.log(result);
-        varReset();
-        return;
+    calculationProcess(char);
+    if (char == "=") {
+      varReset();
+      return;
     }
     resetOperand();
-    isInit = false;
   });
   operatornodes.push(btnoperator);
-}
+});
 operatornodes.splice(0, 1);
 
 numbersection.append(...numbernodes);
