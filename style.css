@@ -1,0 +1,36 @@
+/* .btnoperator
+   .btnnumber
+   .btnmisc
+   .numsection
+   .opersection
+   .miscsection
+   .ressection
+*/
+
+#mainpage{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    border: 1px black solid;
+}
+
+.numsection {
+    display: flex;
+    flex-direction: row;
+}
+
+.btnnumber.col0{
+    display: flex;
+    flex-direction: column;
+}
+.btnnumber.col1{
+    display: flex;
+    flex-direction: column;
+}
+.btnnumber.col2{
+    display: flex;
+    flex-direction: column;
+}
