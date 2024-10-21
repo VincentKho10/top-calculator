@@ -51,10 +51,10 @@ const displayCalculation = (isCalculation, charoperator) => {
   const display = document.createElement('div')
   if (isCalculation) {
     if (charoperator == "=") {
-      display.textContent = (parseFloat(result));
+      display.textContent = (parseFloat(result).toFixed(2));
     } else {
       operator = charoperator;
-      display.textContent = (parseFloat(result) + " " + operator);
+      display.textContent = (parseFloat(result).toFixed(2) + " " + operator);
     }
   } else {
     display.textContent = (operand);
@@ -63,8 +63,8 @@ const displayCalculation = (isCalculation, charoperator) => {
 };
 
 const calculationProcess = (char) => {
-  result = parseFloat(result);
-  operand = parseFloat(operand);
+  result = parseFloat(result).toFixed(2);
+  operand = parseFloat(operand).toFixed(2);
   switch (operator) {
     case "+":
       result += operand;
