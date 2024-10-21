@@ -4,9 +4,9 @@ const operatorsection = document.createElement("div");
 const miscsection = document.createElement("div");
 const resultsection = document.createElement("div");
 
-numbersection.setAttribute('class','numsection')
-operatorsection.setAttribute('class','opersection')
-miscsection.setAttribute('class','miscsection')
+numbersection.setAttribute('class','numsection row')
+operatorsection.setAttribute('class','opersection col')
+miscsection.setAttribute('class','miscsection row')
 resultsection.setAttribute('class','ressection')
 
 let operand = "";
@@ -51,13 +51,13 @@ const displayCalculation = (isCalculation, charoperator) => {
   const display = document.createElement('div')
   if (isCalculation) {
     if (charoperator == "=") {
-      display.textContent = ("end result:" + parseFloat(result));
+      display.textContent = (parseFloat(result));
     } else {
       operator = charoperator;
-      display.textContent = ("current state:" + parseFloat(result) + " " + operator);
+      display.textContent = (parseFloat(result) + " " + operator);
     }
   } else {
-    display.textContent = ("operand: " + operand);
+    display.textContent = (operand);
   }
   resultsection.replaceChildren(display)
 };
@@ -117,13 +117,23 @@ miscnodes.forEach((val, idx) => {
 });
 miscnodes.splice(0, 4);
 
+const group0 = document.createElement('div');
+const group1 = document.createElement('div');
+const group2 = document.createElement('div');
+const group3 = document.createElement('div');
+
+group0.setAttribute('class', 'group0 row');
+group1.setAttribute('class', 'group1 row');
+group2.setAttribute('class', 'group2 row');
+group3.setAttribute('class', 'group3 row');
+
 [...numbernodes[0]].forEach((char, idx) => {
   const btnnumber = document.createElement("button");
   btnnumber.textContent = char;
   if (char == ".") {
     btnnumber.setAttribute("id", "btndot");
   }
-  btnnumber.setAttribute('class',`btnnumber col${idx%3}`)
+  btnnumber.setAttribute('class',`btnnumber`)
   btnnumber.addEventListener("click", () => {
     if (operator == "=") {
       result = "";
@@ -140,8 +150,20 @@ miscnodes.splice(0, 4);
     operand += char;
     displayCalculation(false);
   });
-  numbernodes.push(btnnumber);
+  const groupidx = Math.floor(idx/3);
+  if(groupidx==0){
+    group0.append(btnnumber)
+  }
+  else if(groupidx==1){
+    group1.append(btnnumber)
+  }
+  else if(groupidx==2){
+    group2.append(btnnumber)
+  }else{
+    group3.append(btnnumber)
+  }
 });
+numbernodes.push(group0,group1,group2,group3)
 numbernodes.splice(0, 1);
 
 [...operatornodes[0]].forEach((char, idx) => {
@@ -174,4 +196,16 @@ numbersection.append(...numbernodes);
 operatorsection.append(...operatornodes);
 miscsection.append(...miscnodes);
 
-mainpage.append(numbersection, miscsection, operatorsection, resultsection);
+const result_action = document.createElement('div')
+const action_nummisc_operator = document.createElement('div')
+const nummisc_number_misc = document.createElement('div')
+
+result_action.setAttribute('class', 'result_action col')
+action_nummisc_operator.setAttribute('class', 'action_numisc_oper row')
+nummisc_number_misc.setAttribute('class', 'numisc_number_misc col')
+
+result_action.append(resultsection, action_nummisc_operator)
+action_nummisc_operator.append(nummisc_number_misc, operatorsection)
+nummisc_number_misc.append(miscsection, numbersection)
+
+mainpage.appendChild(result_action);

@@ -7,30 +7,80 @@
    .ressection
 */
 
-#mainpage{
-    height: 90vh;
+*{
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.ressection >*{
+    font-size: 100px;
+    text-align: right;
+}
+
+.row, .col {
     display: flex;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.col {
     flex-direction: column;
+}
+
+.row > *, .col > * {
+    flex: 1;
+}
+
+
+body {
+    display: flex;
+    height: 90vh;
     align-items: center;
     justify-content: center;
-    margin: auto;
     border: 1px black solid;
+}
+
+#mainpage{
+    height: 70vh;
+    width: 50vh;
+    margin: auto;
+    border: 1px blue solid;
+}
+
+.ressection {
+    border: 5px solid black;
+    flex: 1;
+    background-color: aliceblue;
+}
+
+.action_numisc_oper, .numisc_number_misc {
+    flex: 4;
 }
 
 .numsection {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    flex: 7;
 }
 
-.btnnumber.col0{
-    display: flex;
-    flex-direction: column;
+.numsection > * > * {
+    background-color: teal;
 }
-.btnnumber.col1{
-    display: flex;
-    flex-direction: column;
+
+.miscsection > *{
+    background-color: aquamarine;
 }
-.btnnumber.col2{
-    display: flex;
-    flex-direction: column;
+
+.opersection > *{
+    background-color: limegreen;
+}
+
+.group3 > *{
+    flex: 32;
+}
+
+.group3 > *:first-child{
+    flex: 68;
 }
